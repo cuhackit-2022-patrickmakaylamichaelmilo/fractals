@@ -37,3 +37,14 @@ body{
 	background: #F56600;
 	cursor: pointer; 
 }
+
+.row {
+	display: flex;
+	justify-content: center;
+}
+
+.column {
+	flex: 50%;
+	padding-left: 5%;
+	padding-right: 5%;
+}

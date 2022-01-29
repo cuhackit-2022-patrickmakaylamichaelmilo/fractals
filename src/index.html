@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="./static/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="./static/FractalSiteFavicon.png">
+    
 </head>
 <body>
     <h1>Create a fractal!</h1>
@@ -13,7 +14,7 @@
         <input type="range" min="1" max = "100" value ="50" class="slider" id="myRange">
     </div>
 
-    <img id="image" src=--fractal> 
+    <img id="image" style="display: none; height: (--device_height);"> 
 
 
     <button id="renderButton" type="submit" onclick="startRender()">Render Fractal</button>
@@ -30,7 +31,8 @@
                 .then(imageBlob => {
                     const imageObjectURL = URL.createObjectURL(imageBlob);
                     var fractalImage = document.getElementById("image");
-                    fractalImage.src = fractalImage;
+                    fractalImage.src = imageObjectURL;
+                    fractalImage.style.display = "block";
                 })
                     // var request = new XMLHttpRequest();
             // request.open("GET", /* "localhost:80" */ "https://fractals.tech/fractal/triangle?scale=1", true)

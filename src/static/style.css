@@ -1,0 +1,40 @@
+:root{
+	--background-color: rgb(37, 46, 46)
+}
+
+body{
+	background-color: var(--background-color);
+	color: white;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.slidercontainer{
+	width: 100%;
+	
+}
+
+.slider{
+	/* -webkit-appearance: media-slider; */
+	appearance: media-slider;
+	background: #0000FF;
+	width: 100%;
+	height: 25px;
+	outline: none;
+	opacity: 0.7;
+	-webkit-transition: .2s;
+	transition: opacity .2s;
+}
+
+.slider:hover{
+	opacity: 1;
+}
+
+
+.slider::-webkit-slider-thumb{
+	-webkit-appearance: slider-horizontal;
+	appearance: none;
+	width: 25px; 
+	height: 25px; 
+	background: #ee2222; 
+	cursor: pointer; 
+}

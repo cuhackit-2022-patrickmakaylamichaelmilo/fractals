@@ -13,8 +13,28 @@
         <input type="range" min="1" max = "100" value ="50" class="slider" id="myRange">
     </div>
 
+    <img id="image" src=--fractal> 
+
+
+    <button id="renderButton" type="submit" onclick="startRender()">Render Fractal</button>
 
 
     <p style="text-align: center;">Created at CUHackit 2022 - <img src="./static/FractalSiteFavicon.png" height="35px" style="vertical-align: middle;"> </p>
     <p style="text-align: center;">Michael Byrd, Makayla Moster, Patrick Smathers, Milo Weinberg</p>
+
+    <script>
+        function startRender(){
+            document.getElementById("renderButton").textContent = "started!";
+            fetch('/fractal')
+                .then(response => response.blob())
+                .then(imageBlob => {
+                    const imageObjectURL = URL.createObjectURL(imageBlob);
+                    var fractalImage = document.getElementById("image");
+                    fractalImage.src = fractalImage;
+                })
+                    // var request = new XMLHttpRequest();
+            // request.open("GET", /* "localhost:80" */ "https://fractals.tech/fractal/triangle?scale=1", true)
+            // request.send(null);
+        }
+    </script>
 </body>

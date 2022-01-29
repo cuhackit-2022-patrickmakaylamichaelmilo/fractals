@@ -15,8 +15,7 @@ body{
 
 .slider{
 	/* -webkit-appearance: media-slider; */
-	appearance: media-slider;
-	background: #0000FF;
+	appearance: auto;
 	width: 100%;
 	height: 25px;
 	outline: none;
@@ -35,6 +34,6 @@ body{
 	appearance: none;
 	width: 25px; 
 	height: 25px; 
-	background: #ee2222; 
+	background: #F56600;
 	cursor: pointer; 
 }

@@ -5,7 +5,7 @@ description = "Fractal project for CUhackit 2022"
 authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.7.3"
 Pillow = "^9.0.0"
 fastapi = "^0.73.0"
 uvicorn = "^0.17.1"

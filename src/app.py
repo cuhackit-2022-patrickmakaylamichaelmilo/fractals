@@ -18,7 +18,7 @@ def format_exception(e: Exception) -> str:
 
 def save_to_mem(img: PIL.Image) -> io.BytesIO:
     image_mem = io.BytesIO()
-    img.save(image_mem)
+    img.save(image_mem, "PNG")
     image_mem.seek(0)
     return image_mem
 

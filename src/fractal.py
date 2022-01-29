@@ -30,7 +30,37 @@ def serpinskiTriangle():
             d.point((x1, y1), (255, 0, 0, 255))
     img.show()
 
-serpinskiTriangle()
+# serpinskiTriangle()
+
+# 3x6 matrix, generate random numbers between -10 10
+
+
+def identityVariationHelper(x1, y1, k):
+    mat = [[None, None, None, None, None, None], [None, None, None, None, None, None], [None, None, None, None, None, None]]
+    for i in range(3):
+        for j in range(6):
+            mat[i][j] = random.uniform(-1, 1)
+    return mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5]
+
+def identityVariation():
+    width, height = 1000, 1000
+    img = Image.new('RGB', (width, height))
+    d = ImageDraw.Draw(img)
+    x = random.uniform(-1, 1)
+    y = random.uniform(-1, 1)
+
+    for k in range(100000):
+        i = random.randint(0, 2)
+        x, y = identityVariationHelper(x, y, i)
+        if k > 20:
+            x1 = ((x + 1)/ 2) * 1000
+            y1 = abs(((-(y + 1) / 2) * 1000) + 1000)
+            d.point((x1, y1), (255, 0, 255, 255))
+    img.show()
+
+
+
+identityVariation()
 
 # spread = 17
 # width, height = 1000, 800

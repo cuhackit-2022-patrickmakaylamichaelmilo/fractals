@@ -23,8 +23,8 @@ def serpinskiTriangle(zoom: float) -> Image:
         # print(x, y)
         if k > 20:
 
-            x1 = ((x + 1)/ 2) * 1000
-            y1 = abs(((-(y + 1) / 2) * 1000) + 1000)
+            x1 = ((x + 1)/ 2) * 1000 - 250
+            y1 = abs(((-(y + 1) / 2) * 1000) + 1000) + 250
             # print(x1, y1)
             d.point((x1, y1), (255, 0, 0, 255))
 

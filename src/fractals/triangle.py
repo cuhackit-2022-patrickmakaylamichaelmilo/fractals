@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw, ImageFont
 import math, colorsys, random
-import io
+
 
 def serpinskiTriangleHelper(x1, y1, i):
     if i == 0:
@@ -10,7 +10,7 @@ def serpinskiTriangleHelper(x1, y1, i):
     elif i == 2:
         return x1 / 2, (y1 + 1) / 2
 
-def serpinskiTriangle() -> bytes:
+def serpinskiTriangle(zoom: float) -> Image:
     width, height = 1000, 1000
     img = Image.new('RGB', (width, height))
     d = ImageDraw.Draw(img)
@@ -27,15 +27,10 @@ def serpinskiTriangle() -> bytes:
             y1 = abs(((-(y + 1) / 2) * 1000) + 1000)
             # print(x1, y1)
             d.point((x1, y1), (255, 0, 0, 255))
-    
-    image_data = io.BytesIO()
-    img.save(image_data, "PNG")
-    
-    image_data.seek(0)
-    return image_data
+
+    return img
 
 # basically if this file is being ran by itself, run the code in the if block
 if __name__ == "__main__":
-    image_data = serpinskiTriangle()
-    Image.open(image_data).show("Serpinski Triangle")
+    serpinskiTriangle(5).show()
     

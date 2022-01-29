@@ -5,12 +5,34 @@ from fastapi.exceptions import RequestValidationError
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware import Middleware
 from fastapi.staticfiles import StaticFiles
+import traceback
 import logging
+import PIL
 import io
 
-from util.errors import log_exception as _log_exception
-
 from fractals.triangle import serpinskiTriangle
+
+
+def format_exception(e: Exception) -> str:
+    return "".join(traceback.format_exception(type(e), e, e.__traceback__, 4))
+
+
+def log_exception(e: Exception, logger: logging.Logger) -> None:
+    """Logs a nicely formatted exception"""
+
+    if isinstance(e, (HTTPException, StarletteHTTPException)):
+        return
+
+    traceback_lines = format_exception(e).strip("\n").split("\n")
+
+    for line in traceback_lines:
+        logger.error(line)
+
+def save_to_mem(img: PIL.Image) -> io.BytesIO:
+    image_mem = io.BytesIO()
+    img.save(image_mem)
+    image_mem.seek(0)
+    return image_mem
 
 app = FastAPI(
     title="CUhackit Fractal Project",
@@ -28,15 +50,6 @@ app = FastAPI(
 )
 
 logger = logging.getLogger("main")
-
-
-def log_exception(e: Exception) -> None:
-    """Logs a nicely formatted exception"""
-
-    if isinstance(e, (HTTPException, StarletteHTTPException)):
-        return
-
-    _log_exception(e, logger)
 
 
 @app.on_event("startup")
@@ -78,12 +91,14 @@ async def index():
 
 @app.get("/fractal/{fractal_type}")
 async def fractal(fractal_type: str, scale: float = Query(...)):
-    image_io: io.BytesIO = None
+    # params:
+    # colors
+    image: PIL.Image = None
 
     if fractal_type == "triangle":
-        image_io = serpinskiTriangle()
+        image = serpinskiTriangle()
 
-    if image_io is None:
+    if image is None:
         raise HTTPException(status_code=404, detail="No fractal found")
 
-    return StreamingResponse(image_io)
+    return StreamingResponse(save_to_mem(image))

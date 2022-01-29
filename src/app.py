@@ -5,12 +5,20 @@ from fastapi.exceptions import RequestValidationError
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware import Middleware
 from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel, Field
+from typing import List, Optional
 import traceback
 import logging
 import PIL
 import io
 
 from fractals.triangle import serpinskiTriangle
+
+
+class FractalConfig(BaseModel):
+    type: str
+    color: List[int] = Field(min_items=3, max_items=3, default=None)
+    zoom: float = Field(ge=1, default=None)
 
 
 def format_exception(e: Exception) -> str:
@@ -87,14 +95,14 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 async def index():
     return FileResponse("index.html")
 
-@app.get("/fractal/{fractal_type}")
-async def fractal(fractal_type: str, zoom: float = Query(1)):
+@app.get("/fractal")
+async def fractal(config: FractalConfig = FractalConfig(type="triangle")):
     # params:
     # colors
     image: PIL.Image = None
 
-    if fractal_type == "triangle":
-        image = serpinskiTriangle(zoom)
+    if config.type == "triangle":
+        image = serpinskiTriangle(config.zoom)
 
     if image is None:
         raise HTTPException(status_code=404, detail="No fractal found")

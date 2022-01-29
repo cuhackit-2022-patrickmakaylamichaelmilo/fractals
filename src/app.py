@@ -16,18 +16,6 @@ from fractals.triangle import serpinskiTriangle
 def format_exception(e: Exception) -> str:
     return "".join(traceback.format_exception(type(e), e, e.__traceback__, 4))
 
-
-def log_exception(e: Exception, logger: logging.Logger) -> None:
-    """Logs a nicely formatted exception"""
-
-    if isinstance(e, (HTTPException, StarletteHTTPException)):
-        return
-
-    traceback_lines = format_exception(e).strip("\n").split("\n")
-
-    for line in traceback_lines:
-        logger.error(line)
-
 def save_to_mem(img: PIL.Image) -> io.BytesIO:
     image_mem = io.BytesIO()
     img.save(image_mem)
@@ -51,6 +39,16 @@ app = FastAPI(
 
 logger = logging.getLogger("main")
 
+def log_exception(e: Exception) -> None:
+    """Logs a nicely formatted exception"""
+
+    if isinstance(e, (HTTPException, StarletteHTTPException)):
+        return
+
+    traceback_lines = format_exception(e).strip("\n").split("\n")
+
+    for line in traceback_lines:
+        logger.error(line)
 
 @app.on_event("startup")
 async def on_startup():
@@ -90,13 +88,13 @@ async def index():
     return FileResponse("index.html")
 
 @app.get("/fractal/{fractal_type}")
-async def fractal(fractal_type: str, scale: float = Query(...)):
+async def fractal(fractal_type: str, zoom: float = Query(1)):
     # params:
     # colors
     image: PIL.Image = None
 
     if fractal_type == "triangle":
-        image = serpinskiTriangle()
+        image = serpinskiTriangle(zoom)
 
     if image is None:
         raise HTTPException(status_code=404, detail="No fractal found")

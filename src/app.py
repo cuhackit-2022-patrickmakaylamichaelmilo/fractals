@@ -1,13 +1,16 @@
+from fastapi.responses import JSONResponse, FileResponse, StreamingResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
-from fastapi.responses import JSONResponse, FileResponse
+from fastapi import FastAPI, Query, Request, HTTPException
 from fastapi.exceptions import RequestValidationError
 from starlette.middleware.cors import CORSMiddleware
-from fastapi import FastAPI, Request, HTTPException
 from starlette.middleware import Middleware
 from fastapi.staticfiles import StaticFiles
 import logging
+import io
 
 from util.errors import log_exception as _log_exception
+
+from fractals.triangle import serpinskiTriangle
 
 app = FastAPI(
     title="CUhackit Fractal Project",
@@ -72,3 +75,15 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 @app.get("/")
 async def index():
     return FileResponse("index.html")
+
+@app.get("/fractal/{fractal_type}")
+async def fractal(fractal_type: str, scale: float = Query(...)):
+    image_io: io.BytesIO = None
+
+    if fractal_type == "triangle":
+        image_io = serpinskiTriangle()
+
+    if image_io is None:
+        raise HTTPException(status_code=404, detail="No fractal found")
+
+    return StreamingResponse(image_io)

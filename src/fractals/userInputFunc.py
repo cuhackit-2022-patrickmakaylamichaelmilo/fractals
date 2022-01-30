@@ -15,6 +15,13 @@ def sphericalVariation(x, y):
 def horseshoeVariation(x, y):
     r = math.sqrt((x*x) + (y*y))
     return (1/r)*(x-y)*(x+y), (2*x*y)/r
+    
+def crossVariation(x, y):
+    k = math.sqrt((1/((x*x - y*y)**2)))
+    return k * x, k * y
+
+def tangentVariation(x, y):
+    return math.sin(x) / math.cos(y), math.tan(y)
 
 def theThingHelper(x1, y1, k, funct, a, b, c):
     mat = [[None, None, None, None, None, None], [None, None, None, None, None, None], [None, None, None, None, None, None]]
@@ -44,6 +51,14 @@ def theThingHelper(x1, y1, k, funct, a, b, c):
         t += thing[1]
         # s += horseshoeVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[0]
         # t += horseshoeVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[1]
+    elif funct == 'crossVariation':
+        thing = crossVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])
+        s += thing[0]
+        t += thing[1]
+    elif funct == 'tangentVariation':
+        thing = tangentVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])
+        s += thing[0]
+        t += thing[1]
 
     return s, t
 

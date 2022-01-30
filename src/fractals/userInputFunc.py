@@ -3,7 +3,7 @@ import math, colorsys, random
 from typing import List
 import functools
 
-RES = 2000
+RES = 1000
 
 
 def linearVariation(x, y):

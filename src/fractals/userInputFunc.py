@@ -50,7 +50,7 @@ def theThingHelper(x1, y1, k, fun, mat):
 def canvasRescale(x, y, lb, ub):
     return ((x + 1) / 2) * 1000, abs(((-(y + 1) / 2) * 1000) + 1000)
 
-
+@functools.cache
 def colorGrad(x, y, c1, c2):
     t = (x + y) / 2000
     return c2[0] + ((1 - t) * c1[0]), c2[1] + ((1 - t) * c1[1]), c2[2] + ((1 - t) * c1[2])

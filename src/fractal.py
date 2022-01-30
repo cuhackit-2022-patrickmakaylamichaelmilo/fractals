@@ -144,7 +144,7 @@ def theThing(a, b, c, c1, c2, funct):
             t = (x1 + y1) / 2000
             cr, cg, cb = colorGrad(x1, y1, c1, c2)
             d.point((x1, y1), (int(cr), int(cg), int(cb), 255))
-            if funct == 'sphericalVariation':
+            if funct == 'sphericalVariation' or 'crossVariation' or 'tangentVariation':
                 cr, cg, cb = colorGrad(x2, y2, c1, c2)
                 d.point((x2, y2), (int(cr), int(cg), int(cb), 255))
                 cr, cg, cb = colorGrad(x3, y3, c1, c2)
@@ -153,7 +153,7 @@ def theThing(a, b, c, c1, c2, funct):
                 d.point((x4, y4), (int(cr), int(cg), int(cb), 255))
     img.show()
 
-theThing(0.5, 0.5, 0.5, [82, 45, 128], [245, 102, 0],  'sphericalVariation')
+theThing(0.5, 0.5, 0.5, [82, 45, 128], [245, 102, 0],  'crossVariation')
 
 
 def theThing(a, b, c, c1, c2, funct):

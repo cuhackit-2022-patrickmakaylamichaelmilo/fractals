@@ -18,9 +18,9 @@ from fractals.userInputFunc import generateFractal
 class FractalConfig(BaseModel):
     colorA: Optional[List[int]]
     colorB: Optional[List[int]]
-    parameterA: Optional[float]
-    parameterB: Optional[float]
-    parameterC: Optional[float]
+    translationX: Optional[float]
+    translationY: Optional[float]
+    transformation: Optional[float]
     fractalType: Optional[str]
     iterations: Optional[int]
 
@@ -113,15 +113,13 @@ async def index():
 @app.post("/fractal")
 def fractal(config: FractalConfig):
     image = generateFractal(
-        config.parameterA,
-        config.parameterB,
-        config.parameterC,
+        config.translationX,
+        config.translationY,
+        config.transformation,
         config.colorA,
         config.colorB,
         config.fractalType,
         config.iterations,
     )
-
-    print(image.size)
 
     return StreamingResponse(save_to_mem(image))

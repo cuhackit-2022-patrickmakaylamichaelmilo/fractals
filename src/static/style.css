@@ -3,12 +3,12 @@
 }
 
 body{
-	/* background-color: var(--background-color); */
+	background-color: var(--background-color);
 	color: white;
 	font-family: Arial, Helvetica, sans-serif;
-	background-image: url('triangles.png');
-	background-size: 1%;
-	background-blend-mode: color;
+	/* background-image: url('triangles.png');
+	background-size: 5%;
+	background-blend-mode: color; */
 	/* background-blend-mode:luminosity; */
 	
 }

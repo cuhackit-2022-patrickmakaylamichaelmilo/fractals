@@ -15,7 +15,7 @@ def sphericalVariation(x, y):
 def horseshoeVariation(x, y):
     r = math.sqrt((x*x) + (y*y))
     return (1/r)*(x-y)*(x+y), (2*x*y)/r
-    
+
 def crossVariation(x, y):
     k = math.sqrt((1/((x*x - y*y)**2)))
     return k * x, k * y
@@ -62,6 +62,13 @@ def theThingHelper(x1, y1, k, funct, a, b, c):
 
     return s, t
 
+def canvasRescale(x, y, lb, ub):
+    return ((x + 1)/ 2) * 1000, abs(((-(y + 1) / 2) * 1000) + 1000)
+
+def colorGrad(x, y, c1, c2):
+    t = (x + y) / 2000
+    return c2[0]+((1-t)*c1[0]), c2[1]+((1-t)*c1[1]), c2[2]+((1-t)*c1[2])
+
 def generateFractal(a: float, b: float, c: float, c1: List[int], c2: List[int], funct: str) -> Image:
     width, height = 1000, 1000
     img = Image.new('RGB', (width, height))
@@ -72,13 +79,21 @@ def generateFractal(a: float, b: float, c: float, c1: List[int], c2: List[int], 
         i = random.randint(0, 2)
         x, y = theThingHelper(x, y, i, funct, a, b, c)
         if k > 20:
-            x1 = ((x + 1)/ 2) * 1000
-            y1 = abs(((-(y + 1) / 2) * 1000) + 1000)
+            x1, y1 = canvasRescale(x, y, 1000, 1000)
+            x2, y2 = canvasRescale(-x, y, 1000, 1000)
+            x3, y3 = canvasRescale(x, -y, 1000, 1000)
+            x4, y4 = canvasRescale(-x, -y, 1000, 1000)
             t = (x1 + y1) / 2000
-            cr = c2[0]+((1-t)*c1[0])
-            cg = c2[1]+((1-t)*c1[1])
-            cb = c2[2]+((1-t)*c1[2])
+            cr, cg, cb = colorGrad(x1, y1, c1, c2)
             d.point((x1, y1), (int(cr), int(cg), int(cb), 255))
+            if funct == 'sphericalVariation':
+                cr, cg, cb = colorGrad(x2, y2, c1, c2)
+                d.point((x2, y2), (int(cr), int(cg), int(cb), 255))
+                cr, cg, cb = colorGrad(x3, y3, c1, c2)
+                d.point((x3, y3), (int(cr), int(cg), int(cb), 255))
+                cr, cg, cb = colorGrad(x4, y4, c1, c2)
+                d.point((x4, y4), (int(cr), int(cg), int(cb), 255))
+    img.show()
 
     return img
 

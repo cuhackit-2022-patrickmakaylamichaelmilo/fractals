@@ -119,6 +119,14 @@ def theThingHelper(x1, y1, k, funct, a, b, c):
 
     return s, t
 
+def canvasRescale(x, y, lb, ub):
+    return ((x + 1)/ 2) * 1000, abs(((-(y + 1) / 2) * 1000) + 1000)
+
+def colorGrad(x, y, c1, c2):
+    t = (x + y) / 2000
+    return c2[0]+((1-t)*c1[0]), c2[1]+((1-t)*c1[1]), c2[2]+((1-t)*c1[2])
+
+
 def theThing(a, b, c, c1, c2, funct):
     width, height = 1000, 1000
     img = Image.new('RGB', (width, height))
@@ -129,16 +137,59 @@ def theThing(a, b, c, c1, c2, funct):
         i = random.randint(0, 2)
         x, y = theThingHelper(x, y, i, funct, a, b, c)
         if k > 20:
-            x1 = ((x + 1)/ 2) * 1000
-            y1 = abs(((-(y + 1) / 2) * 1000) + 1000)
+            x1, y1 = canvasRescale(x, y, 1000, 1000)
+            x2, y2 = canvasRescale(-x, y, 1000, 1000)
+            x3, y3 = canvasRescale(x, -y, 1000, 1000)
+            x4, y4 = canvasRescale(-x, -y, 1000, 1000)
             t = (x1 + y1) / 2000
-            cr = c2[0]+((1-t)*c1[0])
-            cg = c2[1]+((1-t)*c1[1])
-            cb = c2[2]+((1-t)*c1[2])
+            cr, cg, cb = colorGrad(x1, y1, c1, c2)
             d.point((x1, y1), (int(cr), int(cg), int(cb), 255))
+            if funct == 'sphericalVariation':
+                cr, cg, cb = colorGrad(x2, y2, c1, c2)
+                d.point((x2, y2), (int(cr), int(cg), int(cb), 255))
+                cr, cg, cb = colorGrad(x3, y3, c1, c2)
+                d.point((x3, y3), (int(cr), int(cg), int(cb), 255))
+                cr, cg, cb = colorGrad(x4, y4, c1, c2)
+                d.point((x4, y4), (int(cr), int(cg), int(cb), 255))
     img.show()
 
-theThing(0.5, 0.5, 0.5, [82, 45, 128], [245, 102, 0],  'tangentVariation')
+theThing(0.5, 0.5, 0.5, [82, 45, 128], [245, 102, 0],  'sphericalVariation')
+
+
+def theThing(a, b, c, c1, c2, funct):
+    width, height = 1000, 1000
+    img = Image.new('RGB', (width, height))
+    d = ImageDraw.Draw(img)
+    x = random.uniform(-1, 1)
+    y = random.uniform(-1, 1)
+    for k in range(100000):
+        i = random.randint(0, 2)
+        x, y = theThingHelper(x, y, i, funct, a, b, c)
+        if k > 20:
+            x1, y1 = canvasRescale(x, y, 1000, 1000)
+            x2, y2 = canvasRescale(-x, y, 1000, 1000)
+            x3, y3 = canvasRescale(x, -y, 1000, 1000)
+            x4, y4 = canvasRescale(-x, -y, 1000, 1000)
+
+            # cr = c2[0]+((1-t)*c1[0])
+            # cg = c2[1]+((1-t)*c1[1])
+            # cb = c2[2]+((1-t)*c1[2])
+            r,g,b = colorGrad(x1, y1, c1, c2)
+            d.point((x1, y1), (int(r), int(g), int(b), 255))
+            # if funct == 'sphericalVariation':
+            #     r,g,b = colorGrad(x2, y2, c1, c2)
+            #     d.point((x2, y2), (int(r), int(g), int(b), 255))
+            #     r,g,b = colorGrad(x3, y3, c1, c2)
+            #     d.point((x3, y3), (int(r), int(g), int(b), 255))
+            #     r,g,b = colorGrad(x4, y4, c1, c2)
+            #     d.point((x4, y4), (int(r), int(g), int(b), 255))
+    img.show()
+
+
+
+
+
+
 
 
 # spread = 17

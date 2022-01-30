@@ -12,7 +12,7 @@ import logging
 import PIL
 import io
 
-from fractals.userInputFunc import generateFractal
+from fractal import generateFractal
 
 
 class FractalConfig(BaseModel):
@@ -123,6 +123,7 @@ def fractal(config: FractalConfig):
     )
 
     return StreamingResponse(save_to_mem(image))
+
 
 @app.get("/gallery")
 async def gallery():

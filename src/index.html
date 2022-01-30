@@ -1,11 +1,13 @@
 <!DOCTYPE html>
+
 <head>
     <title>Create a fractal!</title>
     <link rel="stylesheet" href="./static/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="./static/FractalSiteFavicon.png">
-    
+
 </head>
+
 <body>
     <div class="row" style="min-width:max-content;padding-top:2%;">
         <div class="column">
@@ -13,7 +15,8 @@
                 <h1>Create a fractal!</h1>
 
                 <p>Choose a fractal type:</p>
-                <select class="reRenders" name="Fractals" id="fractal-select" style="background-color: (--backgroundColor);">
+                <select class="reRenders" name="Fractals" id="fractal-select"
+                    style="background-color: (--backgroundColor);">
                     <!-- <option value="">--Please choose an option--</option> -->
                     <option value="linearVariation">Linear Variation</option>
                     <option value="sineVariation">Sin Variation</option>
@@ -22,40 +25,40 @@
                     <option value="crossVariation">Cross Variation</option>
                     <option value="tangentVariation">Tangent Variation</option>
                 </select>
-                
+
                 <p id="vTranslX">Iterative X Translation: 0.5</p>
-                <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="translationX">
+                <input type="range" min="1" max="100" value="50" class="slider reRenders" id="translationX">
 
                 <p id="vTranslY">Iterative Y Translation: 0.5</p>
-                <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="translationY">
+                <input type="range" min="1" max="100" value="50" class="slider reRenders" id="translationY">
 
                 <p id="vTransf">Transformation: 0.5</p>
-                <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="transformation">
+                <input type="range" min="1" max="100" value="50" class="slider reRenders" id="transformation">
 
                 <p id="vIters">Iterations: 50000</p>
-                <input type="range" min="1" max = "100000" value ="50000" class="slider reRenders" id="iterations">
+                <input type="range" min="1" max="100000" value="50000" class="slider reRenders" id="iterations">
 
                 <p>Click or tap to change colors!</p>
                 <div>
-                    <input type="color" id="colorOne" name="colorOne" class="reRenders"
-                           value="#F56600">
+                    <input type="color" id="colorOne" name="colorOne" class="reRenders" value="#F56600">
                     <label for="colorOne" style="padding-right:10%;">Color 1</label>
-                    
-                    <input type="color" id="colorTwo" name="colorTwo" class="reRenders"
-                           value="#522D80">
+
+                    <input type="color" id="colorTwo" name="colorTwo" class="reRenders" value="#522D80">
                     <label for="head">Color 2</label>
                 </div>
             </div>
         </div>
 
         <div class="column">
-            
-            <img id="image" style="display: none; height: 500px;" > 
-            <a href="" download="download" class="reRenders" id="downloadButton"><button>Download Fractal Image</button></a>
+
+            <img id="image" style="display: none; height: 500px;">
+            <a href="" download="download" class="reRenders" id="downloadButton"><button>Download Fractal
+                    Image</button></a>
         </div>
     </div>
 
-    <p style="text-align: center;">Created at CUHackit 2022 <img src="./static/FractalSiteFavicon.png" height="35px" style="vertical-align: middle;"> <a class="galleryLink" href="/gallery">Fractal Image Gallery</a></p>
+    <p style="text-align: center;">Created at CUHackit 2022 <img src="./static/FractalSiteFavicon.png" height="35px"
+            style="vertical-align: middle;"> <a class="galleryLink" href="/gallery">Fractal Image Gallery</a></p>
     <p style="text-align: center;">Michael Byrd, Makayla Moster, Patrick Smathers, Milo Weinberg</p>
 
     <script>
@@ -91,11 +94,11 @@
             document.getElementById("vTranslY").innerText = `Iterative Y Translation: ${window.fractalConfig.translationY}`;
             document.getElementById("vTransf").innerText = `Transformation: ${window.fractalConfig.transformation}`;
             document.getElementById("vIters").innerText = `Iterations: ${window.fractalConfig.iterations}`
-            
+
             fetch('/fractal', {
                 method: "POST",
                 body: JSON.stringify(window.fractalConfig),
-                headers: {"Content-Type": "application/json"}
+                headers: { "Content-Type": "application/json" }
             })
                 .then(response => response.blob())
                 .then(imageBlob => {
@@ -112,7 +115,7 @@
                 });
         }
 
-        function downloadImage(){
+        function downloadImage() {
 
         }
 
@@ -123,7 +126,7 @@
                 elem.addEventListener("change", startRender);
                 // elem.addEventListener("pointerUp", startRender);
             }
-        
+
             startRender();
         });
     </script>

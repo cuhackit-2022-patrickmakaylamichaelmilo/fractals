@@ -16,19 +16,19 @@
                 <select class="reRenders" name="Fractals" id="fractal-select" style="background-color: (--backgroundColor);">
                     <!-- <option value="">--Please choose an option--</option> -->
                     <option value="linearVariation">Linear Variation</option>
-                    <option value="sinVariation">Sin Variation</option>
+                    <option value="sineVariation">Sin Variation</option>
                     <option value="sphericalVariation">Spherical Variation</option>
                     <option value="horseshoeVariation">Horseshoe Variation</option>
                 </select>
                 
                 <p>Options:</p>
-                <p>X Translation (0.0-1.0)</p>
+                <p>Iterative X Translation (0.0-1.0)</p>
                 <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="parameterA">
 
-                <p>Y Translation (0.0-1.0)</p>
+                <p>Iterative Y Translation (0.0-1.0)</p>
                 <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="parameterB">
 
-                <p>Iterations (0.0-1.0)</p>
+                <p>Transformation (0.0-1.0)</p>
                 <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="parameterC">
 
                 <p>Click or tap to change colors!</p>
@@ -36,9 +36,7 @@
                     <input type="color" id="colorOne" name="colorOne" class="reRenders"
                            value="#F56600">
                     <label for="colorOne">Color 1</label>
-                <!-- </div> -->
-
-                <!-- <div> -->
+                    
                     <input type="color" id="colorTwo" name="colorTwo" class="reRenders"
                            value="#522D80">
                     <label for="head">Color 2</label>
@@ -66,22 +64,21 @@
 
         function hexToRgb(hex) {
             var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            result = {
-                r: parseInt(result[1], 16),
-                g: parseInt(result[2], 16),
-                b: parseInt(result[3], 16)
-            };
-
-            return [result.r, result.g, result.b]
+            return [
+                parseInt(result[1], 16),
+                parseInt(result[2], 16),
+                parseInt(result[3], 16),
+            ];
         }
 
         function startRender() {
-            window.fractalConfig.parameterA = (document.getElementById("parameterA").value / 100)
-            window.fractalConfig.parameterB = (document.getElementById("parameterB").value / 100)
-            window.fractalConfig.parameterC = (document.getElementById("parameterC").value / 100)
-            window.fractalConfig.fractalType = (document.getElementById("fractal-select").value)
-            window.fractalConfig.colorA = hexToRgb(document.getElementById("colorOne").value) 
-            window.fractalConfig.colorB = hexToRgb(document.getElementById("colorTwo").value)
+            window.fractalConfig.parameterA = (document.getElementById("parameterA").value / 100);
+            window.fractalConfig.parameterB = (document.getElementById("parameterB").value / 100);
+            window.fractalConfig.parameterC = (document.getElementById("parameterC").value / 100);
+            window.fractalConfig.fractalType = (document.getElementById("fractal-select").value);
+            window.fractalConfig.colorA = hexToRgb(document.getElementById("colorOne").value);
+            window.fractalConfig.colorB = hexToRgb(document.getElementById("colorTwo").value);
+            
             fetch('/fractal', {
                 method: "POST",
                 body: JSON.stringify(window.fractalConfig),

@@ -32,5 +32,5 @@ def serpinskiTriangle() -> Image:
 
 # basically if this file is being ran by itself, run the code in the if block
 if __name__ == "__main__":
-    serpinskiTriangle(5).show()
+    serpinskiTriangle().show()
     

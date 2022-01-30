@@ -1,3 +1,4 @@
+from typing import List
 from PIL import Image, ImageDraw, ImageFont
 import math, colorsys, random
 
@@ -34,7 +35,7 @@ def theThingHelper(x1, y1, k, funct, a, b, c):
 
     return s, t
 
-def theThing(a, b, c, c1, c2, funct):
+def generateFractal(a: float, b: float, c: float, c1: List[int], c2: List[int], funct: str) -> Image:
     width, height = 1000, 1000
     img = Image.new('RGB', (width, height))
     d = ImageDraw.Draw(img)
@@ -51,6 +52,9 @@ def theThing(a, b, c, c1, c2, funct):
             cg = c2[1]+((1-t)*c1[1])
             cb = c2[2]+((1-t)*c1[2])
             d.point((x1, y1), (int(cr), int(cg), int(cb), 255))
-    img.show()
+    
+    return img
 
-theThing(0.5, 0.5, 0.5, [82, 45, 128], [245, 102, 0],  'horseshoeVariation')
+# basically if this file is being ran by itself, run the code in the if block
+if __name__ == "__main__":
+    generateFractal(0.5, 0.5, 0.5, [82, 45, 128], [245, 102, 0],  'horseshoeVariation').show()

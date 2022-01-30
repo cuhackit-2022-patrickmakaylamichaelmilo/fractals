@@ -3,64 +3,129 @@
 from PIL import Image, ImageDraw, ImageFont
 import math, colorsys, random
 
-def serpinskiTriangleHelper(x1, y1, i):
-    if i == 0:
-        return x1 / 2, y1 / 2
-    elif i == 1:
-        return (x1 + 1) / 2, y1 / 2
-    elif i == 2:
-        return x1 / 2, (y1 + 1) / 2
+# def serpinskiTriangleHelper(x1, y1, i):
+#     if i == 0:
+#         return x1 / 2, y1 / 2
+#     elif i == 1:
+#         return (x1 + 1) / 2, y1 / 2
+#     elif i == 2:
+#         return x1 / 2, (y1 + 1) / 2
+#
+# def serpinskiTriangle():
+#     width, height = 1000, 1000
+#     img = Image.new('RGB', (width, height))
+#     d = ImageDraw.Draw(img)
+#     x = random.uniform(-1, 1)
+#     y = random.uniform(-1, 1)
+#
+#     for k in range(100000):
+#         i = random.randint(0, 2)
+#         x, y = serpinskiTriangleHelper(x, y, i)
+#         x, y = math.sin(x), math.sin(y)
+#         # print(x, y)
+#         if k > 20:
+#
+#             x1 = ((x + 1)/ 2) * 1000
+#             y1 = abs(((-(y + 1) / 2) * 1000) + 1000)
+#             # print(x1, y1)
+#             d.point((x1, y1), (255, 0, 0, 255))
+#     img.show()
+#
+# # serpinskiTriangle()
+#
+# # 3x6 matrix, generate random numbers between -10 10
+#
+#
+# def identityVariationHelper(x1, y1, k):
+#     mat = [[None, None, None, None, None, None], [None, None, None, None, None, None], [None, None, None, None, None, None]]
+#     c = 0.35
+#     mat = [[c, 0, 0, 0, c, 0], [c, 0, 0.5, 0, c, 0], [c, 0, 0, 0, c, 0.5]]
+#     # mat = [[0.85, 0.04, 0, -0.04, 0.85, 1.6], [0.2, -0.26, 0, 0.23, 0.22, 1.6], [-0.15, 0.28, 0, 0.26, 0.24, 0.44]]
+#     # for i in range(3):
+#         # for j in range(6):
+#         #     mat[i][j] = random.uniform(-1, 1)
+#     return mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5]
+#
+# def identityVariation():
+#     width, height = 1000, 1000
+#     img = Image.new('RGB', (width, height))
+#     d = ImageDraw.Draw(img)
+#     x = random.uniform(-1, 1)
+#     y = random.uniform(-1, 1)
+#
+#     for k in range(100000):
+#         i = random.randint(0, 2)
+#         x, y = identityVariationHelper(x, y, i)
+#         if k > 20:
+#             x1 = ((x + 1)/ 2) * 1000
+#             y1 = abs(((-(y + 1) / 2) * 1000) + 1000)
+#             d.point((x1, y1), (255, 0, 255, 255))
+#     img.show()
+#
+#
 
-def serpinskiTriangle():
-    width, height = 1000, 1000
-    img = Image.new('RGB', (width, height))
-    d = ImageDraw.Draw(img)
-    x = random.uniform(-1, 1)
-    y = random.uniform(-1, 1)
-
-    for k in range(100000):
-        i = random.randint(0, 2)
-        x, y = serpinskiTriangleHelper(x, y, i)
-        # print(x, y)
-        if k > 20:
-
-            x1 = ((x + 1)/ 2) * 1000
-            y1 = abs(((-(y + 1) / 2) * 1000) + 1000)
-            # print(x1, y1)
-            d.point((x1, y1), (255, 0, 0, 255))
-    img.show()
-
-# serpinskiTriangle()
-
-# 3x6 matrix, generate random numbers between -10 10
+# identityVariation()
 
 
-def identityVariationHelper(x1, y1, k):
+def linearVariation(x, y):
+    return x, y
+
+def sinVariation(x, y):
+    return math.sin(x), math.sin(y)
+
+def sphericalVariation(x, y):
+    r = math.sqrt((x*x) + (y*y))
+    return (1/(r*r))*x , (1/(r*r))*y
+
+def horseshoeVariation(x, y):
+    r = math.sqrt((x*x) + (y*y))
+    return (1/r)*(x-y)*(x+y), (2*x*y)/r
+
+# functions = [linearVariation, sinVariation, sphericalVariation, horseshoeVariation]
+# functions = [horseshoeVariation, horseshoeVariation, horseshoeVariation, horseshoeVariation]
+# functions = [sphericalVariation, sphericalVariation, sphericalVariation, sphericalVariation]
+# functions = [linearVariation, linearVariation, linearVariation, linearVariation]
+
+def theThingHelper(x1, y1, k, funct, a, b, c):
     mat = [[None, None, None, None, None, None], [None, None, None, None, None, None], [None, None, None, None, None, None]]
-    for i in range(3):
-        for j in range(6):
-            mat[i][j] = random.uniform(-1, 1)
-    return mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5]
+    mat = [[c, 0, 0, 0, c, 0], [c, 0, a, 0, c, 0], [c, 0, 0, 0, c, b]]
+    s, t = 0, 0
+    if funct == 'linearVariation':
+        s += linearVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[0]
+        t += linearVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[1]
+    elif funct == 'sinVariation':
+        s += sinVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[0]
+        t += sinVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[1]
+    elif funct == 'sphericalVariation':
+        s += sphericalVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[0]
+        t += sphericalVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[1]
+    elif funct == 'horseshoeVariation':
+        s += horseshoeVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[0]
+        t += horseshoeVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[1]
 
-def identityVariation():
+    return s, t
+
+def theThing(a, b, c, c1, c2, funct):
     width, height = 1000, 1000
     img = Image.new('RGB', (width, height))
     d = ImageDraw.Draw(img)
     x = random.uniform(-1, 1)
     y = random.uniform(-1, 1)
-
     for k in range(100000):
         i = random.randint(0, 2)
-        x, y = identityVariationHelper(x, y, i)
+        x, y = theThingHelper(x, y, i, funct, a, b, c)
         if k > 20:
             x1 = ((x + 1)/ 2) * 1000
             y1 = abs(((-(y + 1) / 2) * 1000) + 1000)
-            d.point((x1, y1), (255, 0, 255, 255))
+            t = (x1 + y1) / 2000
+            cr = c2[0]+((1-t)*c1[0])
+            cg = c2[1]+((1-t)*c1[1])
+            cb = c2[2]+((1-t)*c1[2])
+            d.point((x1, y1), (int(cr), int(cg), int(cb), 255))
     img.show()
 
+theThing(0.5, 0.5, 0.5, [82, 45, 128], [245, 102, 0],  'horseshoeVariation')
 
-
-identityVariation()
 
 # spread = 17
 # width, height = 1000, 800

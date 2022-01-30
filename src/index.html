@@ -24,16 +24,16 @@
                     <option value="tangentVariation">Tangent Variation</option>
                 </select>
                 
-                <p>Iterative X Translation (0.0-1.0)</p>
-                <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="parameterA">
+                <p id="vTranslX">Iterative X Translation: 0.5</p>
+                <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="translationX">
 
-                <p>Iterative Y Translation (0.0-1.0)</p>
-                <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="parameterB">
+                <p id="vTranslY">Iterative Y Translation: 0.5</p>
+                <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="translationY">
 
-                <p>Transformation (0.0-1.0)</p>
-                <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="parameterC">
+                <p id="vTransf">Transformation: 0.5</p>
+                <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="transformation">
 
-                <p>Iterations (1-100000)</p>
+                <p id="vIters">Iterations: 50000</p>
                 <input type="range" min="1" max = "100000" value ="50000" class="slider reRenders" id="iterations">
 
                 <p>Click or tap to change colors!</p>
@@ -63,9 +63,9 @@
         window.fractalConfig = {
             colorA: [245, 102, 0],
             colorB: [82, 45, 128],
-            parameterA: 0.5,
-            parameterB: 0.5,
-            parameterC: 0.5,
+            translationX: 0.5,
+            translationY: 0.5,
+            transformation: 0.5,
             fractalType: "linearVariation",
             iterations: 50000,
         }
@@ -80,13 +80,18 @@
         }
 
         function startRender() {
-            window.fractalConfig.parameterA = (document.getElementById("parameterA").value / 100);
-            window.fractalConfig.parameterB = (document.getElementById("parameterB").value / 100);
-            window.fractalConfig.parameterC = (document.getElementById("parameterC").value / 100);
+            window.fractalConfig.translationX = (document.getElementById("translationX").value / 100);
+            window.fractalConfig.translationY = (document.getElementById("translationY").value / 100);
+            window.fractalConfig.transformation = (document.getElementById("transformation").value / 100);
             window.fractalConfig.fractalType = (document.getElementById("fractal-select").value);
             window.fractalConfig.colorA = hexToRgb(document.getElementById("colorOne").value);
             window.fractalConfig.colorB = hexToRgb(document.getElementById("colorTwo").value);
             window.fractalConfig.iterations = document.getElementById("iterations").value;
+
+            document.getElementById("vTranslX").innerText = `Iterative X Translation: ${window.fractalConfig.translationX}`;
+            document.getElementById("vTranslY").innerText = `Iterative Y Translation: ${window.fractalConfig.translationY}`;
+            document.getElementById("vTransf").innerText = `Transformation: ${window.fractalConfig.transformation}`;
+            document.getElementById("vIters").innerText = `Iterations: ${window.fractalConfig.iterations}`
             
             fetch('/fractal', {
                 method: "POST",

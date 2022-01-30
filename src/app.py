@@ -122,4 +122,6 @@ def fractal(config: FractalConfig):
         config.iterations,
     )
 
+    print(image.size)
+
     return StreamingResponse(save_to_mem(image))

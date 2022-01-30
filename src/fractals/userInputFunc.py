@@ -3,6 +3,8 @@ import math, colorsys, random
 from typing import List
 import functools
 
+RES = 1000
+
 
 def linearVariation(x, y):
     return x, y
@@ -48,11 +50,11 @@ def theThingHelper(x1, y1, k, fun, mat):
 
 
 def canvasRescale(x, y, lb, ub):
-    return ((x + 1) / 2) * 1000, abs(((-(y + 1) / 2) * 1000) + 1000)
+    return ((x + 1) / 2) * RES, abs(((-(y + 1) / 2) * RES) + RES)
 
 
 def colorGrad(x, y, c1, c2):
-    t = (x + y) / 2000
+    t = (x + y) / (RES * 2)
     return c2[0] + ((1 - t) * c1[0]), c2[1] + ((1 - t) * c1[1]), c2[2] + ((1 - t) * c1[2])
 
 
@@ -61,7 +63,7 @@ def generateFractal(
 ) -> Image:
     c1, c2 = tuple(c1), tuple(c2)
 
-    width, height = 1000, 1000
+    width, height = RES, RES
     img = Image.new("RGB", (width, height))
 
     fun = funcMap[funct]
@@ -85,12 +87,12 @@ def generateFractal(
         x, y = theThingHelper(x, y, i, fun, mat)
 
         if k > 20:
-            x1, y1 = canvasRescale(x, y, 1000, 1000)
-            x2, y2 = canvasRescale(-x, y, 1000, 1000)
-            x3, y3 = canvasRescale(x, -y, 1000, 1000)
-            x4, y4 = canvasRescale(-x, -y, 1000, 1000)
+            x1, y1 = canvasRescale(x, y, RES, RES)
+            x2, y2 = canvasRescale(-x, y, RES, RES)
+            x3, y3 = canvasRescale(x, -y, RES, RES)
+            x4, y4 = canvasRescale(-x, -y, RES, RES)
 
-            # t = (x1 + y1) / 2000
+            # t = (x1 + y1) / (RES * 2)
 
             cr, cg, cb = colorGrad(x1, y1, c1, c2)
 

@@ -10,7 +10,7 @@ def serpinskiTriangleHelper(x1, y1, i):
     elif i == 2:
         return x1 / 2, (y1 + 1) / 2
 
-def serpinskiTriangle(zoom: float) -> Image:
+def serpinskiTriangle() -> Image:
     width, height = 1000, 1000
     img = Image.new('RGB', (width, height))
     d = ImageDraw.Draw(img)

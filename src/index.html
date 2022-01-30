@@ -36,13 +36,20 @@
         }
 
         function startRender() {
-            fetch('/fractal', {body: JSON.stringify(window.fractalConfig)})
+            fetch('/fractal', {
+                method: "POST",
+                body: JSON.stringify(window.fractalConfig),
+                headers: {"Content-Type": "application/json"}
+            })
                 .then(response => response.blob())
                 .then(imageBlob => {
                     const imageObjectURL = URL.createObjectURL(imageBlob);
                     var fractalImage = document.getElementById("image");
                     fractalImage.src = imageObjectURL;
                     fractalImage.style.display = "block";
+                })
+                .catch(e => {
+                    console.log(e);
                 });
         }
 

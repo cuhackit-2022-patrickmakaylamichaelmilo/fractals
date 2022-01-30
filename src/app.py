@@ -16,16 +16,17 @@ from fractals.triangle import serpinskiTriangle
 
 
 class FractalConfig(BaseModel):
-    colorA: List[int]
-    colorB: List[int]
-    parameterA: float
-    parameterB: float
-    parameterC: float
-    fractalType: str
+    colorA: Optional[List[int]]
+    colorB: Optional[List[int]]
+    parameterA: Optional[float]
+    parameterB: Optional[float]
+    parameterC: Optional[float]
+    fractalType: Optional[str]
 
 
 def format_exception(e: Exception) -> str:
     return "".join(traceback.format_exception(type(e), e, e.__traceback__, 4))
+
 
 def save_to_mem(img: PIL.Image) -> io.BytesIO:
     image_mem = io.BytesIO()
@@ -98,14 +99,14 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 async def index():
     return FileResponse("index.html")
 
-@app.get("/fractal")
-async def fractal(config: FractalConfig = FractalConfig(type="triangle")):
+@app.post("/fractal")
+async def fractal(config: FractalConfig):
     # params:
     # colors
     image: PIL.Image = None
 
-    # if config.type == "triangle":
-    #     image = serpinskiTriangle(config.zoom)
+    if config.fractalType == "triangle":
+        image = serpinskiTriangle()
 
     if image is None:
         raise HTTPException(status_code=404, detail="No fractal found")

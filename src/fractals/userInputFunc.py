@@ -1,3 +1,4 @@
+from typing import List
 from PIL import Image, ImageDraw, ImageFont
 import math, colorsys, random
 
@@ -20,21 +21,33 @@ def theThingHelper(x1, y1, k, funct, a, b, c):
     mat = [[c, 0, 0, 0, c, 0], [c, 0, a, 0, c, 0], [c, 0, 0, 0, c, b]]
     s, t = 0, 0
     if funct == 'linearVariation':
-        s += linearVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[0]
-        t += linearVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[1]
+        thing = linearVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])
+        # s += linearVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[0]
+        # t += linearVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[1]
+        s += thing[0]
+        t += thing[1]
     elif funct == 'sinVariation':
-        s += sinVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[0]
-        t += sinVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[1]
+        thing = sinVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])
+        s += thing[0]
+        t += thing[1]
+        # s += sinVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[0]
+        # t += sinVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[1]
     elif funct == 'sphericalVariation':
-        s += sphericalVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[0]
-        t += sphericalVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[1]
+        thing = sphericalVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])
+        s += thing[0]
+        t += thing[1]
+        # s += sphericalVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[0]
+        # t += sphericalVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[1]
     elif funct == 'horseshoeVariation':
-        s += horseshoeVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[0]
-        t += horseshoeVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[1]
+        thing = horseshoeVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])
+        s += thing[0]
+        t += thing[1]
+        # s += horseshoeVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[0]
+        # t += horseshoeVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[1]
 
     return s, t
 
-def theThing(a, b, c, c1, c2, funct):
+def generateFractal(a: float, b: float, c: float, c1: List[int], c2: List[int], funct: str) -> Image:
     width, height = 1000, 1000
     img = Image.new('RGB', (width, height))
     d = ImageDraw.Draw(img)
@@ -51,6 +64,9 @@ def theThing(a, b, c, c1, c2, funct):
             cg = c2[1]+((1-t)*c1[1])
             cb = c2[2]+((1-t)*c1[2])
             d.point((x1, y1), (int(cr), int(cg), int(cb), 255))
-    img.show()
 
-theThing(0.5, 0.5, 0.5, [82, 45, 128], [245, 102, 0],  'horseshoeVariation')
+    return img
+
+# basically if this file is being ran by itself, run the code in the if block
+if __name__ == "__main__":
+    generateFractal(0.5, 0.5, 0.5, [82, 45, 128], [245, 102, 0],  'horseshoeVariation').show()

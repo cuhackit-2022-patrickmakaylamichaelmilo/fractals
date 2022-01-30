@@ -12,7 +12,7 @@ import logging
 import PIL
 import io
 
-from fractals.triangle import serpinskiTriangle
+from fractals.userInputFunc import generateFractal
 
 
 class FractalConfig(BaseModel):
@@ -101,14 +101,13 @@ async def index():
 
 @app.post("/fractal")
 async def fractal(config: FractalConfig):
-    # params:
-    # colors
-    image: PIL.Image = None
-    print(config.dict())
-    if config.fractalType == "triangle":
-        image = serpinskiTriangle()
-
-    if image is None:
-        raise HTTPException(status_code=404, detail="No fractal found")
+    image = generateFractal(
+        config.parameterA,
+        config.parameterB,
+        config.parameterC,
+        config.colorA,
+        config.colorB,
+        config.fractalType,
+    )
 
     return StreamingResponse(save_to_mem(image))

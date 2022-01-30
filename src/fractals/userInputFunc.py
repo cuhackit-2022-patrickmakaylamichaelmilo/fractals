@@ -57,7 +57,7 @@ def colorGrad(x, y, c1, c2):
 
 
 def generateFractal(
-    a: float, b: float, c: float, c1: List[int], c2: List[int], funct: str
+    a: float, b: float, c: float, c1: List[int], c2: List[int], funct: str, iters: int
 ) -> Image:
     c1, c2 = tuple(c1), tuple(c2)
 
@@ -80,7 +80,7 @@ def generateFractal(
     x = random.uniform(-1, 1)
     y = random.uniform(-1, 1)
 
-    for k in range(100000):
+    for k in range(iters):
         i = random.randint(0, 2)
         x, y = theThingHelper(x, y, i, fun, mat)
 

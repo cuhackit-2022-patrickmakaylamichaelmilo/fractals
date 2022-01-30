@@ -22,6 +22,7 @@ class FractalConfig(BaseModel):
     parameterB: Optional[float]
     parameterC: Optional[float]
     fractalType: Optional[str]
+    iterations: Optional[int]
 
 
 def format_exception(e: Exception) -> str:
@@ -120,6 +121,7 @@ async def fractal(config: FractalConfig):
         config.colorA,
         config.colorB,
         config.fractalType,
+        config.iterations,
     )
 
     return StreamingResponse(save_to_mem(image))

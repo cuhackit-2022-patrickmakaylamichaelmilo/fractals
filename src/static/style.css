@@ -10,12 +10,12 @@ body{
 	background-size: 5%;
 	background-blend-mode: color; */
 	/* background-blend-mode:luminosity; */
-
+	
 }
 
 .slidercontainer{
 	width: 100%;
-
+	
 }
 
 .slider{
@@ -37,10 +37,10 @@ body{
 .slider::-webkit-slider-thumb{
 	-webkit-appearance: slider-horizontal;
 	appearance: none;
-	width: 25px;
-	height: 25px;
+	width: 25px; 
+	height: 25px; 
 	background: #F56600;
-	cursor: pointer;
+	cursor: pointer; 
 }
 
 .row {
@@ -52,47 +52,4 @@ body{
 	flex: 50%;
 	padding-left: 5%;
 	padding-right: 5%;
-}
-
-div.gallery {
-  margin: 5px;
-  border: 1px solid #ccc;
-  float: left;
-  width: 180px;
-}
-
-div.gallery:hover {
-  border: 1px solid #777;
-}
-
-div.gallery img {
-  width: 100%;
-  height: auto;
-}
-
-div.desc {
-  padding: 15px;
-  text-align: center;
-}
-
-/* Navbar container */
-.navbar {
-  overflow: hidden;
-  background-color: #F56600;
-  font-family: Arial;
-}
-
-/* Links inside the navbar */
-.navbar a {
-  float: left;
-  font-size: 16px;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-/* Add a red background color to navbar links on hover */
-.navbar a:hover, .dropdown:hover .dropbtn {
-  background-color: #522D80;
 }

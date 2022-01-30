@@ -4,17 +4,12 @@
     <link rel="stylesheet" href="./static/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="./static/FractalSiteFavicon.png">
-
+    
 </head>
 <body>
-
+    
     <h1>Create a fractal!</h1>
-
-    <div class="navbar">
-        <a href="/">Create a Fractal</a>
-        <a href="/gallery">Fractal Gallery</a>
-    </div>
-
+    
     <div class="row" style="min-width:max-content">
         <div class="column">
             <div class="slidercontainer">
@@ -28,7 +23,7 @@
                     <option value="crossVariation">Cross Variation</option>
                     <option value="tangentVariation">Tangent Variation</option>
                 </select>
-
+                
                 <p id="vTranslX">Iterative X Translation: 0.5</p>
                 <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="translationX">
 
@@ -46,7 +41,7 @@
                     <input type="color" id="colorOne" name="colorOne" class="reRenders"
                            value="#F56600">
                     <label for="colorOne">Color 1</label>
-
+                    
                     <input type="color" id="colorTwo" name="colorTwo" class="reRenders"
                            value="#522D80">
                     <label for="head">Color 2</label>
@@ -55,18 +50,14 @@
         </div>
 
         <div class="column">
-
-            <img id="image" style="display: none; height: 500px;" >
+            
+            <img id="image" style="display: none; height: 500px;" > 
             <a href="" download="download" class="reRenders" id="downloadButton"><button>Download Fractal Image</button></a>
         </div>
     </div>
 
-    <footer style='position:absolute;
-       bottom:0;
-       width:100%;'>
     <p style="text-align: center;">Created at CUHackit 2022 - <img src="./static/FractalSiteFavicon.png" height="35px" style="vertical-align: middle;"> </p>
     <p style="text-align: center;">Michael Byrd, Makayla Moster, Patrick Smathers, Milo Weinberg</p>
-  </footer>
 
     <script>
         window.fractalConfig = {
@@ -101,7 +92,7 @@
             document.getElementById("vTranslY").innerText = `Iterative Y Translation: ${window.fractalConfig.translationY}`;
             document.getElementById("vTransf").innerText = `Transformation: ${window.fractalConfig.transformation}`;
             document.getElementById("vIters").innerText = `Iterations: ${window.fractalConfig.iterations}`
-
+            
             fetch('/fractal', {
                 method: "POST",
                 body: JSON.stringify(window.fractalConfig),
@@ -133,7 +124,7 @@
                 elem.addEventListener("change", startRender);
                 // elem.addEventListener("pointerUp", startRender);
             }
-
+        
             startRender();
         });
     </script>

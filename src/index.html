@@ -8,20 +8,20 @@
 </head>
 <body>
     <h1>Create a fractal!</h1>
-    <p>Choose a fractal type:</p>
-    <select name="Fractals" id="fractal-select" style="background-color: (--backgroundColor);">
-        <option value="">--Please choose an option--</option>
-        <option value="linearVariation">Linear Variation</option>
-        <option value="sineVariation">Sine Variation</option>
-        <option value="sphericalVariation">Spherical Variation</option>
-        <option value="horseshoeVariation">Horseshoe Variation</option>
-    </select>
-
+    
     <div class="row">
         <div class="column">
-            <p>Options:</p>
             <div class="slidercontainer">
-
+                <p>Choose a fractal type:</p>
+                <select class="reRenders" name="Fractals" id="fractal-select" style="background-color: (--backgroundColor);">
+                    <!-- <option value="">--Please choose an option--</option> -->
+                    <option value="linearVariation">Linear Variation</option>
+                    <option value="sinVariation">Sin Variation</option>
+                    <option value="sphericalVariation">Spherical Variation</option>
+                    <option value="horseshoeVariation">Horseshoe Variation</option>
+                </select>
+                
+                <p>Options:</p>
                 <p>X Translation (0.0-1.0)</p>
                 <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="parameterA">
 
@@ -53,7 +53,7 @@
 
         function startRender() {
             window.fractalConfig.parameterA = (document.getElementById("parameterA").value / 100)
-            window.fractalConfig.parameterB = (document.getElementById("parameterA").value / 100)
+            window.fractalConfig.parameterB = (document.getElementById("parameterB").value / 100)
             window.fractalConfig.parameterC = (document.getElementById("parameterC").value / 100)
             window.fractalConfig.fractalType = (document.getElementById("fractal-select").value)
             fetch('/fractal', {

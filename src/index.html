@@ -40,7 +40,7 @@
             parameterA: 0.5,
             parameterB: 0.5,
             parameterC: 0.5,
-            fractalType: "triangle"
+            fractalType: "linearVariation"
         }
 
         function startRender() {
@@ -68,12 +68,11 @@
             // go through each element that has reRenders class and add event listener
             // so that it will update automagically when you change something
             for (let elem of document.getElementsByClassName("reRenders")) {
-                console.log(elem);
                 elem.addEventListener("change", startRender);
                 // elem.addEventListener("pointerUp", startRender);
             }
-
-        });
         
+            startRender();
+        });
     </script>
 </body>

@@ -112,6 +112,8 @@ async def index():
 
 @app.post("/fractal")
 def fractal(config: FractalConfig):
+    print(config.json())
+
     image = generateFractal(
         config.translationX,
         config.translationY,

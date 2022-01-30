@@ -86,7 +86,7 @@ def generateFractal(a: float, b: float, c: float, c1: List[int], c2: List[int], 
             t = (x1 + y1) / 2000
             cr, cg, cb = colorGrad(x1, y1, c1, c2)
             d.point((x1, y1), (int(cr), int(cg), int(cb), 255))
-            if funct == 'sphericalVariation':
+            if funct == 'sphericalVariation' or 'crossVariation' or 'tangentVariation':
                 cr, cg, cb = colorGrad(x2, y2, c1, c2)
                 d.point((x2, y2), (int(cr), int(cg), int(cb), 255))
                 cr, cg, cb = colorGrad(x3, y3, c1, c2)

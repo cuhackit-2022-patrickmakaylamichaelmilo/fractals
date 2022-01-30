@@ -104,7 +104,7 @@ async def fractal(config: FractalConfig):
     # params:
     # colors
     image: PIL.Image = None
-
+    print(config.dict())
     if config.fractalType == "triangle":
         image = serpinskiTriangle()
 

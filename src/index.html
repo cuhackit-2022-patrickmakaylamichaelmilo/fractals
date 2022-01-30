@@ -13,7 +13,15 @@
         <div class="column">
             <p>Options:</p>
             <div class="slidercontainer">
-                <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="myRange">
+
+                <p>Parameter A</p>
+                <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="parameterA">
+
+                <p>Parameter B</p>
+                <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="parameterB">
+
+                <p>Parameter C</p>
+                <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="parameterC">
             </div>
         </div>
 
@@ -36,6 +44,9 @@
         }
 
         function startRender() {
+            window.fractalConfig.parameterA = (document.getElementById("parameterA").value / 100)
+            window.fractalConfig.parameterB = (document.getElementById("parameterB").value / 100)
+            window.fractalConfig.parameterC = (document.getElementById("parameterC").value / 100)
             fetch('/fractal', {
                 method: "POST",
                 body: JSON.stringify(window.fractalConfig),
@@ -62,7 +73,7 @@
                 // elem.addEventListener("pointerUp", startRender);
             }
 
-            startRender();
         });
+        
     </script>
 </body>

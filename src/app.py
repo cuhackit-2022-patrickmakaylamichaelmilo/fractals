@@ -123,3 +123,7 @@ def fractal(config: FractalConfig):
     )
 
     return StreamingResponse(save_to_mem(image))
+
+@app.get("/gallery")
+async def gallery():
+    return FileResponse("gallery.html")

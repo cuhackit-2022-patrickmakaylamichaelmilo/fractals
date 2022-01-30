@@ -53,3 +53,11 @@ body{
 	padding-left: 5%;
 	padding-right: 5%;
 }
+
+.galleryLink {
+	color: rgb(245, 102, 0);
+}
+
+.galleryLink:visited {
+	color: rgb(245, 102, 0);
+}

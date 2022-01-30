@@ -34,22 +34,28 @@ def save_to_mem(img: PIL.Image) -> io.BytesIO:
     image_mem.seek(0)
     return image_mem
 
+
 app = FastAPI(
     title="CUhackit Fractal Project",
     version="1.0.0",
     middleware=[
         Middleware(
             CORSMiddleware,
-            allow_origins=["http://localhost:3000", "http://127.0.0.1:3000", "https://fractals.tech"],
+            allow_origins=[
+                "http://localhost:3000",
+                "http://127.0.0.1:3000",
+                "https://fractals.tech",
+            ],
             allow_credentials=True,
             allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
             allow_headers=["*", "Authorization"],
             expose_headers=["*", "Authorization"],
         )
-    ]
+    ],
 )
 
 logger = logging.getLogger("main")
+
 
 def log_exception(e: Exception) -> None:
     """Logs a nicely formatted exception"""
@@ -61,6 +67,7 @@ def log_exception(e: Exception) -> None:
 
     for line in traceback_lines:
         logger.error(line)
+
 
 @app.on_event("startup")
 async def on_startup():
@@ -93,11 +100,14 @@ async def general_exception_handler(req: Request, e: Exception) -> JSONResponse:
 async def req_validation_exception_handler(req: Request, e: Exception) -> JSONResponse:
     return JSONResponse(status_code=422, content={"detail": e.errors()})
 
+
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 @app.get("/")
 async def index():
     return FileResponse("index.html")
+
 
 @app.post("/fractal")
 async def fractal(config: FractalConfig):

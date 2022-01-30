@@ -70,66 +70,90 @@ import math, colorsys, random
 def linearVariation(x, y):
     return x, y
 
+
 def sinVariation(x, y):
     return math.sin(x), math.sin(y)
 
+
 def sphericalVariation(x, y):
-    r = math.sqrt((x*x) + (y*y))
-    return (1/(r*r))*x , (1/(r*r))*y
+    r = math.sqrt((x * x) + (y * y))
+    return (1 / (r * r)) * x, (1 / (r * r)) * y
+
 
 def horseshoeVariation(x, y):
-    r = math.sqrt((x*x) + (y*y))
-    return (1/r)*(x-y)*(x+y), (2*x*y)/r
+    r = math.sqrt((x * x) + (y * y))
+    return (1 / r) * (x - y) * (x + y), (2 * x * y) / r
+
 
 def crossVariation(x, y):
-    k = math.sqrt((1/((x*x - y*y)**2)))
+    k = math.sqrt((1 / ((x * x - y * y) ** 2)))
     return k * x, k * y
+
 
 def tangentVariation(x, y):
     return math.sin(x) / math.cos(y), math.tan(y)
 
+
 def theThingHelper(x1, y1, k, funct, a, b, c):
-    mat = [[None, None, None, None, None, None], [None, None, None, None, None, None], [None, None, None, None, None, None]]
+    mat = [
+        [None, None, None, None, None, None],
+        [None, None, None, None, None, None],
+        [None, None, None, None, None, None],
+    ]
     mat = [[c, 0, 0, 0, c, 0], [c, 0, a, 0, c, 0], [c, 0, 0, 0, c, b]]
     s, t = 0, 0
-    if funct == 'linearVariation':
-        thing = linearVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])
+    if funct == "linearVariation":
+        thing = linearVariation(
+            mat[k][0] * x1 + mat[k][1] * y1 + mat[k][2], mat[k][3] * x1 + mat[k][4] * y1 + mat[k][5]
+        )
         s += thing[0]
         t += thing[1]
-    elif funct == 'sinVariation':
-        thing = sinVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])
+    elif funct == "sinVariation":
+        thing = sinVariation(
+            mat[k][0] * x1 + mat[k][1] * y1 + mat[k][2], mat[k][3] * x1 + mat[k][4] * y1 + mat[k][5]
+        )
         s += thing[0]
         t += thing[1]
-    elif funct == 'sphericalVariation':
-        thing = sphericalVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])
+    elif funct == "sphericalVariation":
+        thing = sphericalVariation(
+            mat[k][0] * x1 + mat[k][1] * y1 + mat[k][2], mat[k][3] * x1 + mat[k][4] * y1 + mat[k][5]
+        )
         s += thing[0]
         t += thing[1]
-    elif funct == 'horseshoeVariation':
-        thing = horseshoeVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])
+    elif funct == "horseshoeVariation":
+        thing = horseshoeVariation(
+            mat[k][0] * x1 + mat[k][1] * y1 + mat[k][2], mat[k][3] * x1 + mat[k][4] * y1 + mat[k][5]
+        )
         s += thing[0]
         t += thing[1]
-    elif funct == 'crossVariation':
-        thing = crossVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])
+    elif funct == "crossVariation":
+        thing = crossVariation(
+            mat[k][0] * x1 + mat[k][1] * y1 + mat[k][2], mat[k][3] * x1 + mat[k][4] * y1 + mat[k][5]
+        )
         s += thing[0]
         t += thing[1]
-    elif funct == 'tangentVariation':
-        thing = tangentVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])
+    elif funct == "tangentVariation":
+        thing = tangentVariation(
+            mat[k][0] * x1 + mat[k][1] * y1 + mat[k][2], mat[k][3] * x1 + mat[k][4] * y1 + mat[k][5]
+        )
         s += thing[0]
         t += thing[1]
 
     return s, t
 
+
 def canvasRescale(x, y, lb, ub):
-    return ((x + 1)/ 2) * 1000, abs(((-(y + 1) / 2) * 1000) + 1000)
+    return ((x + 1) / 2) * 1000, abs(((-(y + 1) / 2) * 1000) + 1000)
+
 
 def colorGrad(x, y, c1, c2):
     t = (x + y) / 2000
-    return c2[0]+((1-t)*c1[0]), c2[1]+((1-t)*c1[1]), c2[2]+((1-t)*c1[2])
+    return c2[0] + ((1 - t) * c1[0]), c2[1] + ((1 - t) * c1[1]), c2[2] + ((1 - t) * c1[2])
 
 
 def theThing(a, b, c, c1, c2, funct):
     width, height = 1000, 1000
-    img = Image.new('RGB', (width, height))
+    img = Image.new("RGB", (width, height))
     d = ImageDraw.Draw(img)
     x = random.uniform(-1, 1)
     y = random.uniform(-1, 1)
@@ -144,7 +168,7 @@ def theThing(a, b, c, c1, c2, funct):
             t = (x1 + y1) / 2000
             cr, cg, cb = colorGrad(x1, y1, c1, c2)
             d.point((x1, y1), (int(cr), int(cg), int(cb), 255))
-            if funct == 'sphericalVariation' or 'crossVariation' or 'tangentVariation':
+            if funct == "sphericalVariation" or "crossVariation" or "tangentVariation":
                 cr, cg, cb = colorGrad(x2, y2, c1, c2)
                 d.point((x2, y2), (int(cr), int(cg), int(cb), 255))
                 cr, cg, cb = colorGrad(x3, y3, c1, c2)
@@ -153,12 +177,13 @@ def theThing(a, b, c, c1, c2, funct):
                 d.point((x4, y4), (int(cr), int(cg), int(cb), 255))
     img.show()
 
-theThing(0.5, 0.5, 0.5, [82, 45, 128], [245, 102, 0],  'crossVariation')
+
+theThing(0.5, 0.5, 0.5, [82, 45, 128], [245, 102, 0], "crossVariation")
 
 
 def theThing(a, b, c, c1, c2, funct):
     width, height = 1000, 1000
-    img = Image.new('RGB', (width, height))
+    img = Image.new("RGB", (width, height))
     d = ImageDraw.Draw(img)
     x = random.uniform(-1, 1)
     y = random.uniform(-1, 1)
@@ -174,7 +199,7 @@ def theThing(a, b, c, c1, c2, funct):
             # cr = c2[0]+((1-t)*c1[0])
             # cg = c2[1]+((1-t)*c1[1])
             # cb = c2[2]+((1-t)*c1[2])
-            r,g,b = colorGrad(x1, y1, c1, c2)
+            r, g, b = colorGrad(x1, y1, c1, c2)
             d.point((x1, y1), (int(r), int(g), int(b), 255))
             # if funct == 'sphericalVariation':
             #     r,g,b = colorGrad(x2, y2, c1, c2)
@@ -184,12 +209,6 @@ def theThing(a, b, c, c1, c2, funct):
             #     r,g,b = colorGrad(x4, y4, c1, c2)
             #     d.point((x4, y4), (int(r), int(g), int(b), 255))
     img.show()
-
-
-
-
-
-
 
 
 # spread = 17

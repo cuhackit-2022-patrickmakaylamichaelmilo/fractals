@@ -1,3 +1,3 @@
 cd src
-poetry run uvicorn app:app --host 0.0.0.0 --port 8080 --use-colors --log-level debug
+python3 -m poetry run gunicorn -b 0.0.0.0:8080 -k uvicorn.workers.UvicornWorker app:app --workers 4
 cd ..

@@ -16,9 +16,12 @@ from fractals.triangle import serpinskiTriangle
 
 
 class FractalConfig(BaseModel):
-    type: str
-    color: List[int] = Field(min_items=3, max_items=3, default=None)
-    zoom: float = Field(ge=1, default=None)
+    colorA: List[int]
+    colorB: List[int]
+    parameterA: float
+    parameterB: float
+    parameterC: float
+    fractalType: str
 
 
 def format_exception(e: Exception) -> str:
@@ -101,8 +104,8 @@ async def fractal(config: FractalConfig = FractalConfig(type="triangle")):
     # colors
     image: PIL.Image = None
 
-    if config.type == "triangle":
-        image = serpinskiTriangle(config.zoom)
+    # if config.type == "triangle":
+    #     image = serpinskiTriangle(config.zoom)
 
     if image is None:
         raise HTTPException(status_code=404, detail="No fractal found")

@@ -26,8 +26,17 @@
     <p style="text-align: center;">Michael Byrd, Makayla Moster, Patrick Smathers, Milo Weinberg</p>
 
     <script>
-        function startRender(){
-            fetch('/fractal')
+        window.fractalConfig = {
+            colorA: [245, 102, 0],
+            colorB: [82, 45, 128],
+            parameterA: 0.5,
+            parameterB: 0.5,
+            parameterC: 0.5,
+            fractalType: "triangle"
+        }
+
+        function startRender() {
+            fetch('/fractal', {body: JSON.stringify(window.fractalConfig)})
                 .then(response => response.blob())
                 .then(imageBlob => {
                     const imageObjectURL = URL.createObjectURL(imageBlob);

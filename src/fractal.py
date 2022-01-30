@@ -81,10 +81,12 @@ def horseshoeVariation(x, y):
     r = math.sqrt((x*x) + (y*y))
     return (1/r)*(x-y)*(x+y), (2*x*y)/r
 
-# functions = [linearVariation, sinVariation, sphericalVariation, horseshoeVariation]
-# functions = [horseshoeVariation, horseshoeVariation, horseshoeVariation, horseshoeVariation]
-# functions = [sphericalVariation, sphericalVariation, sphericalVariation, sphericalVariation]
-# functions = [linearVariation, linearVariation, linearVariation, linearVariation]
+def crossVariation(x, y):
+    k = math.sqrt((1/((x*x - y*y)**2)))
+    return k * x, k * y
+
+def tangentVariation(x, y):
+    return math.sin(x) / math.cos(y), math.tan(y)
 
 def theThingHelper(x1, y1, k, funct, a, b, c):
     mat = [[None, None, None, None, None, None], [None, None, None, None, None, None], [None, None, None, None, None, None]]
@@ -92,28 +94,28 @@ def theThingHelper(x1, y1, k, funct, a, b, c):
     s, t = 0, 0
     if funct == 'linearVariation':
         thing = linearVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])
-        # s += linearVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[0]
-        # t += linearVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[1]
         s += thing[0]
         t += thing[1]
     elif funct == 'sinVariation':
         thing = sinVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])
         s += thing[0]
         t += thing[1]
-        # s += sinVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[0]
-        # t += sinVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[1]
     elif funct == 'sphericalVariation':
         thing = sphericalVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])
         s += thing[0]
         t += thing[1]
-        # s += sphericalVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[0]
-        # t += sphericalVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[1]
     elif funct == 'horseshoeVariation':
         thing = horseshoeVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])
         s += thing[0]
         t += thing[1]
-        # s += horseshoeVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[0]
-        # t += horseshoeVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])[1]
+    elif funct == 'crossVariation':
+        thing = crossVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])
+        s += thing[0]
+        t += thing[1]
+    elif funct == 'tangentVariation':
+        thing = tangentVariation(mat[k][0]*x1 + mat[k][1]*y1 + mat[k][2], mat[k][3]*x1 + mat[k][4]*y1 + mat[k][5])
+        s += thing[0]
+        t += thing[1]
 
     return s, t
 
@@ -136,7 +138,7 @@ def theThing(a, b, c, c1, c2, funct):
             d.point((x1, y1), (int(cr), int(cg), int(cb), 255))
     img.show()
 
-theThing(0.5, 0.5, 0.5, [82, 45, 128], [245, 102, 0],  'horseshoeVariation')
+theThing(0.5, 0.5, 0.5, [82, 45, 128], [245, 102, 0],  'tangentVariation')
 
 
 # spread = 17

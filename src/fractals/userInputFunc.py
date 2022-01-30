@@ -59,6 +59,8 @@ def colorGrad(x, y, c1, c2):
 def generateFractal(
     a: float, b: float, c: float, c1: List[int], c2: List[int], funct: str
 ) -> Image:
+    c1, c2 = tuple(c1), tuple(c2)
+
     width, height = 1000, 1000
     img = Image.new("RGB", (width, height))
 

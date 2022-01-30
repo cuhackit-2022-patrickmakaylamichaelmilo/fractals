@@ -15,6 +15,13 @@ def sphericalVariation(x, y):
 def horseshoeVariation(x, y):
     r = math.sqrt((x*x) + (y*y))
     return (1/r)*(x-y)*(x+y), (2*x*y)/r
+    
+def crossVariation(x, y):
+    k = math.sqrt((1/((x*x - y*y)**2)))
+    return k * x, k * y
+
+def tangentVariation(x, y):
+    return math.sin(x) / math.cos(y), math.tan(y)
 
 def theThingHelper(x1, y1, k, funct, a, b, c):
     mat = [[None, None, None, None, None, None], [None, None, None, None, None, None], [None, None, None, None, None, None]]

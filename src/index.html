@@ -14,13 +14,13 @@
             <p>Options:</p>
             <div class="slidercontainer">
 
-                <p>Parameter A</p>
+                <p>Scale (0.0-1.0)</p>
                 <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="parameterA">
 
-                <p>Parameter B</p>
-                <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="parameterB">
+                <!-- <p>Parameter B (0.0-1.0)</p>
+                <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="parameterB"> -->
 
-                <p>Parameter C</p>
+                <p>Parameter C (0.0-1.0)</p>
                 <input type="range" min="1" max = "100" value ="50" class="slider reRenders" id="parameterC">
             </div>
         </div>
@@ -45,7 +45,7 @@
 
         function startRender() {
             window.fractalConfig.parameterA = (document.getElementById("parameterA").value / 100)
-            window.fractalConfig.parameterB = (document.getElementById("parameterB").value / 100)
+            window.fractalConfig.parameterB = (document.getElementById("parameterA").value / 100)
             window.fractalConfig.parameterC = (document.getElementById("parameterC").value / 100)
             fetch('/fractal', {
                 method: "POST",

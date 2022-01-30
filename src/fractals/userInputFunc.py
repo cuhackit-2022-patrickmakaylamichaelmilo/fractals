@@ -42,7 +42,9 @@ funcMap = {
 
 
 def theThingHelper(x1, y1, k, fun, mat):
-    return fun(mat[k][0] * x1 + mat[k][1] * y1 + mat[k][2], mat[k][3] * x1 + mat[k][4] * y1 + mat[k][5])
+    return fun(
+        mat[k][0] * x1 + mat[k][1] * y1 + mat[k][2], mat[k][3] * x1 + mat[k][4] * y1 + mat[k][5]
+    )
 
 
 def canvasRescale(x, y, lb, ub):
@@ -63,7 +65,13 @@ def generateFractal(
     fun = funcMap[funct]
     mat = ((c, 0, 0, 0, c, 0), (c, 0, a, 0, c, 0), (c, 0, 0, 0, c, b))
 
-    doMirror = funct in ["sineVariation", "linearVariation", "sphericalVariation", "crossVariation", "tangentVariation"]
+    doMirror = funct in [
+        "sineVariation",
+        "linearVariation",
+        "sphericalVariation",
+        "crossVariation",
+        "tangentVariation",
+    ]
 
     d = ImageDraw.Draw(img)
 
@@ -80,8 +88,8 @@ def generateFractal(
             x3, y3 = canvasRescale(x, -y, 1000, 1000)
             x4, y4 = canvasRescale(-x, -y, 1000, 1000)
 
-            #t = (x1 + y1) / 2000
-            
+            # t = (x1 + y1) / 2000
+
             cr, cg, cb = colorGrad(x1, y1, c1, c2)
 
             d.point((x1, y1), (int(cr), int(cg), int(cb), 255))

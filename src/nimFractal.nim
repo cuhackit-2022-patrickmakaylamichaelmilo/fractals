@@ -9,6 +9,9 @@ randomize()
 type
     Point {.shallow.} = tuple[x: float, y: float]
 
+const
+    RES = 1000
+
 proc linearVariation(x: float, y: float): Point {.inline.} =
     return (x, y)
 
@@ -20,7 +23,7 @@ proc sphericalVariation(x: float, y: float): Point {.inline.} =
     return (r2 * x, r2 * y)
 
 proc horseshoeVariation(x: float, y: float): Point {.inline.} =
-    let r = math.sqrt((x * x) + (y * y))
+    let r = sqrt((x * x) + (y * y))
     return ((1.0 / r) * (x - y) * (x + y), (2.0 * x * y) / r)
 
 proc crossVariation(x: float, y: float): Point {.inline.} =
@@ -29,10 +32,6 @@ proc crossVariation(x: float, y: float): Point {.inline.} =
 
 proc tangentVariation(x: float, y: float): Point {.inline.} =
     return (sin(x) / cos(y), tan(y))
-
-
-const
-    RES = 1000
 
 proc canvasRescale(x: float, y: float): Point {.inline.} =
     return (((x + 1) / 2) * RES, abs(((-(y + 1) / 2) * RES) + RES))
@@ -62,6 +61,7 @@ proc generateFractal(a: float, b: float, c: float, c1: ColorRGB, c2: ColorRGB, f
             "sphericalVariation",
             "crossVariation",
             "tangentVariation",
+            "hyperbolicVariation",
         ]
         
         fun = case funct:

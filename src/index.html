@@ -137,6 +137,7 @@
                 window.fetchPromise.then(() => {
                     startRender();
                 })
+                .catch(e => console.log(e));
             } else startRender();
         });
     </script>

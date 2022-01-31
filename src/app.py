@@ -7,12 +7,16 @@ from starlette.middleware import Middleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from typing import List, Optional
+from pathlib import Path
+import nimporter
 import traceback
 import logging
-import PIL
 import io
 
-from fractal import generateFractal
+# from fractal import generateFractal
+from nimFractal import pyGenFractal
+
+nimporter.build_nim_extensions(root=Path("../"), danger=True)
 
 
 class FractalConfig(BaseModel):
@@ -29,11 +33,11 @@ def format_exception(e: Exception) -> str:
     return "".join(traceback.format_exception(type(e), e, e.__traceback__, 4))
 
 
-def save_to_mem(img: PIL.Image) -> io.BytesIO:
-    image_mem = io.BytesIO()
-    img.save(image_mem, "PNG")
-    image_mem.seek(0)
-    return image_mem
+# def save_to_mem(img) -> io.BytesIO:
+#     image_mem = io.BytesIO()
+#     img.save(image_mem, "PNG")
+#     image_mem.seek(0)
+#     return image_mem
 
 
 app = FastAPI(
@@ -110,19 +114,20 @@ async def index():
     return FileResponse("index.html")
 
 
+# normally I would run this in a threadpool, but this is not supported by nimporter
 @app.post("/fractal")
-def fractal(config: FractalConfig):
-    image = generateFractal(
+async def fractal(config: FractalConfig):
+    image = pyGenFractal(
         config.translationX,
         config.translationY,
         config.transformation,
-        config.colorA,
-        config.colorB,
+        *config.colorA,
+        *config.colorB,
         config.fractalType,
         config.iterations,
     )
 
-    return StreamingResponse(save_to_mem(image))
+    return StreamingResponse(io.BytesIO(image))
 
 
 @app.get("/gallery")

@@ -12,6 +12,7 @@ uvicorn = "^0.17.1"
 gunicorn = "^20.1.0"
 imageio = "^2.14.1"
 pygifsicle = "^1.0.5"
+nimporter = "^1.1.0"
 
 [tool.poetry.dev-dependencies]
 

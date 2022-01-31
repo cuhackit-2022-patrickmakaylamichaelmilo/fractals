@@ -80,6 +80,8 @@
             iterations: 50000,
         }
 
+        window.fetchPromise = null;
+
         function hexToRgb(hex) {
             var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
             return [
@@ -103,7 +105,7 @@
             document.getElementById("vTransf").innerText = `Transformation: ${window.fractalConfig.transformation}`;
             document.getElementById("vIters").innerText = `Iterations: ${window.fractalConfig.iterations}`
 
-            fetch('/fractal', {
+            window.fetchPromise = fetch('/fractal', {
                 method: "POST",
                 body: JSON.stringify(window.fractalConfig),
                 headers: { "Content-Type": "application/json" }
@@ -123,10 +125,6 @@
                 });
         }
 
-        function downloadImage() {
-
-        }
-
         window.addEventListener("load", () => {
             // go through each element that has reRenders class and add event listener
             // so that it will update automagically when you change something
@@ -135,7 +133,11 @@
                 // elem.addEventListener("pointerUp", startRender);
             }
 
-            startRender();
+            if (window.fetchPromise) {
+                window.fetchPromise.then(() => {
+                    startRender();
+                })
+            } else startRender();
         });
     </script>
 </body>

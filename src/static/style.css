@@ -1,8 +1,8 @@
-:root{
+:root {
 	--background-color: rgb(37, 46, 46);
 }
 
-body{
+body {
 	background-color: var(--background-color);
 	color: white;
 	font-family: Arial, Helvetica, sans-serif;
@@ -13,12 +13,12 @@ body{
 	
 }
 
-.slidercontainer{
+.slidercontainer {
 	width: 100%;
 	
 }
 
-.slider{
+.slider {
 	/* -webkit-appearance: media-slider; */
 	appearance: auto;
 	width: 100%;
@@ -29,12 +29,12 @@ body{
 	transition: opacity .2s;
 }
 
-.slider:hover{
+.slider:hover {
 	opacity: 1;
 }
 
 
-.slider::-webkit-slider-thumb{
+.slider::-webkit-slider-thumb {
 	-webkit-appearance: slider-horizontal;
 	appearance: none;
 	width: 25px; 
@@ -58,6 +58,6 @@ body{
 	color: rgb(245, 102, 0);
 }
 
-.galleryLink:visited {
+a {
 	color: rgb(245, 102, 0);
 }

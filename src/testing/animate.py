@@ -13,12 +13,12 @@ def main():
     for i in range(1, 101):
         i /= 100
 
-        frames.append(generateFractal(0.82, 0.83, i, [44, 84, 165], [28, 166, 150], "tangentVariation", 100000))
+        frames.append(generateFractal(1, 1, i, [44, 84, 165], [28, 166, 150], "sineVariation", 100000))
 
     frames = frames + list(reversed(frames))
 
     with open("out.gif", "wb") as out_gif:
-        imageio.mimwrite(out_gif, frames, format="gif", fps=40)
+        imageio.mimwrite(out_gif, frames, format="gif", fps=30)
 
     pygifsicle.optimize("out.gif")
 

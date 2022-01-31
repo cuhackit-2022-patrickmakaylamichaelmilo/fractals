@@ -10,10 +10,10 @@ def main():
     start = time.time()
     frames = []
 
-    for i in range(1, 201):
-        i /= 200
+    for i in range(1, 101):
+        i /= 100
 
-        frames.append(generateFractal(1, 1, i, [44, 84, 165], [28, 166, 150], "sphericalVariation", 100000))
+        frames.append(generateFractal(0.82, 0.83, i, [44, 84, 165], [28, 166, 150], "tangentVariation", 100000))
 
     frames = frames + list(reversed(frames))
 

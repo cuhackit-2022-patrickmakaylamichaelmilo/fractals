@@ -2,4 +2,4 @@
 .env
 __pycache__/
 *.DS_Store
-src/out.gif
+src/testing/out.gif

@@ -55,8 +55,6 @@ proc colorGrad(x: float, y: float, c1: ColorRGB, c2: ColorRGB): ColorRGB {.inlin
 
 proc generateFractal(a: float, b: float, c: float, c1: ColorRGB, c2: ColorRGB, funct: string, iters: int): Image =
     let
-        width, height = RES
-
         mat = [
             [c, 0, 0, 0, c, 0],
             [c, 0, a, 0, c, 0],
@@ -82,7 +80,7 @@ proc generateFractal(a: float, b: float, c: float, c1: ColorRGB, c2: ColorRGB, f
             else: linearVariation
     
     var
-        image = newImage(width, height)
+        image = newImage(RES, RES)
         x = rand(2.0) - 1.0
         y = rand(2.0) - 1.0
 

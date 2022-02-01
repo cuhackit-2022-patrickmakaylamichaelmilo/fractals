@@ -5,6 +5,7 @@ author        = "Milo Weinberg"
 description   = "fractals"
 license       = "MIT"
 srcDir        = "src"
+bin           = @["nimFractal"]
 
 
 # Dependencies

@@ -39,7 +39,10 @@ proc tangentVariation(x: float, y: float): Point {.inline.} =
     return p(sin(x) / cos(y), tan(y))
 
 proc canvasRescale(x: float, y: float): tuple[x: float, y: float] {.inline.} =
-    return (((x + 1) / 2) * RES, abs(((-(y + 1) / 2) * RES) + RES))
+    return (
+        ((x + 1) / 2) * RES,
+        ((y + 1) / 2) * -RES + RES
+    )
 
 proc colorGrad(x: float, y: float, c1: ColorRGB, c2: ColorRGB): ColorRGB {.inline.} =
     let t = 1.0 - ((x + y) / (RES.float * 2.0))
@@ -123,3 +126,16 @@ proc pyGenFractal(a, b, c: float, cr1, cg1, cb1, cr2, cg2, cb2: int, funct: stri
     )
 
     return image.encodeImage(FileFormat.ffPng)
+
+when isMainModule:
+    let image = generateFractal(
+        0.75,
+        1,
+        1,
+        ColorRGB(r: 245, g: 102, b: 0),
+        ColorRGB(r: 82, g: 48, b: 128),
+        "sphericalVariation",
+        300_000,
+    )
+    
+    image.writeFile("src/testing/out.png")

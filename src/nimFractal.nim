@@ -7,33 +7,38 @@ import pixie
 randomize()
 
 type
-    Point {.shallow.} = tuple[x: float, y: float]
+    Point {.shallow.} = object
+        x: float
+        y: float
 
 const
     RES = 1000
 
+proc p(x: float, y: float): Point {.inline.} =
+    return Point(x: x, y: y)
+
 proc linearVariation(x: float, y: float): Point {.inline.} =
-    return (x, y)
+    return p(x, y)
 
 proc sineVariation(x: float, y: float): Point {.inline.} =
-    return (sin(x), sin(y))
+    return p(sin(x), sin(y))
 
 proc sphericalVariation(x: float, y: float): Point {.inline.} =
     let r2 = 1.0 / pow(sqrt(x * x + y * y), 2)
-    return (r2 * x, r2 * y)
+    return p(r2 * x, r2 * y)
 
 proc horseshoeVariation(x: float, y: float): Point {.inline.} =
     let r = sqrt((x * x) + (y * y))
-    return ((1.0 / r) * (x - y) * (x + y), (2.0 * x * y) / r)
+    return p((1.0 / r) * (x - y) * (x + y), (2.0 * x * y) / r)
 
 proc crossVariation(x: float, y: float): Point {.inline.} =
     let k = sqrt((1.0 / pow((x * x - y * y), 2)))
-    return (k * x, k * y)
+    return p(k * x, k * y)
 
 proc tangentVariation(x: float, y: float): Point {.inline.} =
-    return (sin(x) / cos(y), tan(y))
+    return p(sin(x) / cos(y), tan(y))
 
-proc canvasRescale(x: float, y: float): Point {.inline.} =
+proc canvasRescale(x: float, y: float): tuple[x: float, y: float] {.inline.} =
     return (((x + 1) / 2) * RES, abs(((-(y + 1) / 2) * RES) + RES))
 
 proc colorGrad(x: float, y: float, c1: ColorRGB, c2: ColorRGB): ColorRGB {.inline.} =

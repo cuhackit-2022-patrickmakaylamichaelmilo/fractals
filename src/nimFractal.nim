@@ -127,15 +127,15 @@ proc pyGenFractal(a, b, c: float, cr1, cg1, cb1, cr2, cg2, cb2: int, funct: stri
 
     return image.encodeImage(FileFormat.ffPng)
 
-when isMainModule:
-    let image = generateFractal(
-        0.75,
-        1,
-        1,
-        ColorRGB(r: 245, g: 102, b: 0),
-        ColorRGB(r: 82, g: 48, b: 128),
-        "sphericalVariation",
-        300_000,
-    )
+# when isMainModule:
+#     let image = generateFractal(
+#         0.75,
+#         1,
+#         1,
+#         ColorRGB(r: 245, g: 102, b: 0),
+#         ColorRGB(r: 82, g: 48, b: 128),
+#         "sphericalVariation",
+#         300_000,
+#     )
     
-    image.writeFile("src/testing/out.png")
+#     image.writeFile("src/testing/out.png")
